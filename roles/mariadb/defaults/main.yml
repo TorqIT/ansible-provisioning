@@ -1,4 +1,0 @@
-mariadb_version: "11.4"
-innodb_buffer_pool_size: "4G"
-mariadb_database_name: pimcore
-mariadb_user: pimcore

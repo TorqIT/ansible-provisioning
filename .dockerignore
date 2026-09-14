@@ -1,9 +1,0 @@
-.git
-.github
-.claude
-.devcontainer
-.vscode
-README.md
-install.sh
-hosts.yml
-*.retry

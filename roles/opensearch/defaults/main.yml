@@ -1,3 +1,0 @@
-opensearch_java_opts: "-Xms512m -Xmx512m"
-opensearch_auto_create_index: "true"
-opensearch_indices_query_bool_max_clause_count: "3000"

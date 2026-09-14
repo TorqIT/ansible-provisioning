@@ -1,9 +1,0 @@
-- name: Pull and run Gotenberg container
-  community.docker.docker_container:
-    name: gotenberg
-    pull: always
-    state: started
-    image: gotenberg/gotenberg:8
-    restart_policy: always
-    ports:
-      - "3000:3000/tcp"

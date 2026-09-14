@@ -1,4 +1,0 @@
-mysql_version: 8.4
-innodb_buffer_pool_size: "4G"
-mysql_database_name: pimcore
-mysql_user: pimcore

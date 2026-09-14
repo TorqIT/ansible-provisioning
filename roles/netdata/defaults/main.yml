@@ -1,2 +1,0 @@
-netdata_port: "19999"
-netdata_hostname: "{{ inventory_hostname }}"
