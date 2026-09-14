@@ -1,0 +1,55 @@
+# CVE-2026-31431
+- name: Block the algif_aead module
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/modprobe.d/manual-disable-algif_aead.conf
+    content: install algif_aead /bin/false
+    owner: root
+    group: root
+    mode: "0644"
+  register: block_algif_aead
+
+- name: Check if vulnerable algif_aead module is loaded
+  become: true
+  ansible.builtin.command: lsmod
+  register: lsmod_output
+  changed_when: false
+
+- name: Remove vulnerable algif_aead module (if loaded)
+  become: true
+  ansible.builtin.command: modprobe -r algif_aead
+  register: rmmod_algif_aead
+  when: "'algif_aead' in lsmod_output.stdout"
+
+- name: Reboot if algif_aead was removed
+  become: true
+  ansible.builtin.reboot:
+    msg: "Rebooting to apply CVE-2026-31431 mitigation (algif_aead module removed)"
+    pre_reboot_delay: 5
+    reboot_timeout: 300
+  when: rmmod_algif_aead is defined and rmmod_algif_aead.changed
+
+# CVE-2026-43284
+- name: Add Dirty Frag kernel module mitigations
+  become: true
+  ansible.builtin.copy:
+    dest: /etc/modprobe.d/dirty-frag.conf
+    content: |
+      install esp4 /bin/false
+      install esp6 /bin/false
+      install rxrpc /bin/false
+    owner: root
+    group: root
+    mode: "0644"
+  register: modprobe_conf
+
+- name: Update initramfs (only if modprobe config changed)
+  become: true
+  ansible.builtin.command: update-initramfs -u -k all
+  when: modprobe_conf.changed
+
+- name: Unload vulnerable modules if loaded
+  become: true
+  ansible.builtin.shell: |
+    modprobe -r esp4 esp6 rxrpc 2>/dev/null || true
+  changed_when: false

@@ -1,0 +1,26 @@
+- name: Pull and run MySQL container
+  become: true
+  community.docker.docker_container:
+    name: mysql
+    pull: always
+    image: mysql:{{ mysql_version }}
+    restart_policy: "always"
+    ports:
+      - "3306:3306/tcp"
+    volumes:
+      - mysql:/var/lib/mysql
+    env:
+      MYSQL_ROOT_PASSWORD: "{{ mysql_root_password | default(sudo_password) }}"
+      MYSQL_DATABASE: "{{ mysql_database_name }}"
+      MYSQL_USER: "{{ mysql_user }}"
+      MYSQL_PASSWORD: "{{ mysql_password }}"
+    working_dir: /application
+    command:
+      - mysqld
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --innodb-file-per-table=1
+      - --innodb-buffer-pool-size={{ innodb_buffer_pool_size }}
+      - --local_infile=1
+      - --skip-log-bin # TODO revisit this - may want to not skip in production cases
+      - --bind-address=0.0.0.0

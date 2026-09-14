@@ -1,0 +1,4 @@
+nginx_network: nginx_network
+use_acme_companion: true
+use_certbot: false
+nginx_certs_volume: nginx-certs

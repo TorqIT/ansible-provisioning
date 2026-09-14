@@ -1,0 +1,26 @@
+- name: Pull and run MariaDB container
+  become: true
+  community.docker.docker_container:
+    name: mariadb
+    pull: always
+    image: mariadb:{{ mariadb_version }}
+    restart_policy: "always"
+    ports:
+      - "3306:3306/tcp"
+    volumes:
+      - mariadb:/var/lib/mysql
+    env:
+      MARIADB_ROOT_PASSWORD: "{{ mariadb_root_password | default(sudo_password) }}"
+      MARIADB_DATABASE: "{{ mariadb_database_name }}"
+      MARIADB_USER: "{{ mariadb_user }}"
+      MARIADB_PASSWORD: "{{ mariadb_password }}"
+    working_dir: /application
+    command:
+      - mariadbd
+      - --character-set-server=utf8mb4
+      - --collation-server=utf8mb4_general_ci
+      - --innodb-file-per-table=1
+      - --innodb-buffer-pool-size={{ innodb_buffer_pool_size }}
+      - --local_infile=1
+      - --skip-log-bin # TODO revisit this - may want to not skip in production cases
+      - --bind-address=0.0.0.0

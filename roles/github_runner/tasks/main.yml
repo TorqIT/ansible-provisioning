@@ -1,0 +1,104 @@
+- name: Ensure runner user exists
+  become: true
+  ansible.builtin.user:
+    name: "{{ github_runner_user }}"
+    shell: /bin/bash
+    groups:
+      - docker
+    append: true
+    create_home: true
+
+- name: Create runner directory
+  become: true
+  ansible.builtin.file:
+    path: "/home/{{ github_runner_user }}/actions-runner"
+    state: directory
+    owner: "{{ github_runner_user }}"
+    group: "{{ github_runner_user }}"
+    mode: "0755"
+
+- name: Download GitHub Actions runner if not present # noqa [no-jinja-when]
+  become: true
+  ansible.builtin.get_url:
+    url: "https://github.com/actions/runner/releases/download/v{{ github_runner_version }}/actions-runner-linux-x64-{{ github_runner_version }}.tar.gz"
+    dest: "/home/{{ github_runner_user }}/actions-runner.tar.gz"
+    owner: "{{ github_runner_user }}"
+    group: "{{ github_runner_user }}"
+    mode: "0755"
+  when: not lookup('ansible.builtin.file', "/home/{{ github_runner_user }}/actions-runner/bin/Runner.Listener", errors='ignore')
+
+- name: Extract runner archive if not already extracted
+  become: true
+  ansible.builtin.unarchive:
+    src: "/home/{{ github_runner_user }}/actions-runner.tar.gz"
+    dest: "/home/{{ github_runner_user }}/actions-runner"
+    owner: "{{ github_runner_user }}"
+    group: "{{ github_runner_user }}"
+    remote_src: yes
+    creates: "/home/{{ github_runner_user }}/actions-runner/config.sh"
+
+- name: Check if runner is already configured
+  become: true
+  ansible.builtin.stat:
+    path: "/home/{{ github_runner_user }}/actions-runner/.runner"
+  register: runner_config
+
+- name: Register GitHub Actions runner (only if not already registered)
+  become: true
+  become_user: "{{ github_runner_user }}"
+  when: not runner_config.stat.exists
+  args:
+    chdir: "/home/{{ github_runner_user }}/actions-runner"
+  ansible.builtin.shell: |
+    ./config.sh --url {{ github_repo_url }} \
+                --token {{ github_runner_token }} \
+                --name {{ github_runner_name }} \
+                --labels {{ github_runner_labels }} \
+                --work {{ github_runner_work_directory }} \
+                --unattended
+
+- name: Install systemd service
+  become: true
+  ansible.builtin.template:
+    src: runner.service.j2
+    dest: /etc/systemd/system/github-runner.service
+    mode: "0644"
+  notify:
+    - Reload systemd
+
+- name: Ensure GitHub Actions runner service is enabled and started
+  become: true
+  ansible.builtin.systemd:
+    name: github-runner
+    enabled: true
+    state: started
+
+- name: Ensure pipx is installed and configured (required by some Actions)
+  block:
+    - name: Ensure Python 3 and pip are installed
+      become: true
+      ansible.builtin.apt:
+        name:
+          - python3
+          - python3-pip
+          - python3-venv
+        state: present
+        update_cache: true
+
+    - name: Install pipx manually as runner user
+      become: true
+      become_user: "{{ github_runner_user }}"
+      ansible.builtin.shell: |
+        python3 -m pip install --user pipx
+      args:
+        executable: /bin/bash
+        creates: /home/runner/.local/bin/pipx
+
+    - name: Ensure ~/.local/bin exists
+      become: true
+      ansible.builtin.file:
+        path: /home/{{ github_runner_user }}/.local/bin
+        state: directory
+        mode: "0755"
+        owner: "{{ github_runner_user }}"
+        group: "{{ github_runner_user }}"

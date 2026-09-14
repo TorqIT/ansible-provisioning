@@ -1,0 +1,51 @@
+- name: Run common role
+  hosts: all
+  become: true
+  roles:
+    - role: common
+
+- name: Servers running Opensearch
+  hosts: opensearch
+  roles:
+    - role: opensearch
+
+- name: Servers running Mercure
+  hosts: mercure
+  roles:
+    - role: mercure
+
+- name: Servers running Gotenberg for Web2Print
+  hosts: gotenberg
+  roles:
+    - role: gotenberg
+
+- name: Servers running a Blackfire agent
+  hosts: blackfire
+  roles:
+    - role: blackfire
+
+- name: Servers running Netdata agents
+  hosts: netdata
+  roles:
+    - role: netdata
+
+- name: Servers running Pimcore Agent server agent
+  hosts: pimcore_agent_server
+  roles:
+  - role: pimcore_agent_server
+
+- name: Pimcore application servers
+  hosts: pimcore_application_servers
+  roles:
+    - role: github_runner
+    - role: nginx_proxy
+
+- name: MySQL servers
+  hosts: mysql_servers
+  roles:
+    - role: mysql
+
+- name: MariaDB servers
+  hosts: mariadb_servers
+  roles:
+    - role: mariadb
