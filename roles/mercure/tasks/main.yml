@@ -1,0 +1,18 @@
+- name: Pull and run Mercure container
+  community.docker.docker_container:
+    name: mercure
+    pull: always
+    state: started
+    image: dunglas/mercure:latest
+    restart_policy: always
+    volumes:
+      - mercure-data:/usr/share/opensearch/data
+      - mercure-config:/config
+    env:
+      SERVER_NAME: ":80"
+      MERCURE_PUBLISHER_JWT_KEY: "{{ mercure_jwt_key }}"
+      MERCURE_SUBSCRIBER_JWT_KEY: "{{ mercure_jwt_key }}"
+    ports:
+      - "80:80/tcp"
+
+
