@@ -19,7 +19,7 @@ env:
   IMAGE_NAME: torqit/ansible-provisioning
 
 jobs:
-  CI:
+  build-tag-push:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -83,3 +83,8 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  tag-major-release:
+    needs: [build-tag-push]
+    if: startsWith(github.ref, 'refs/tags/')
+    uses: TorqIT/github-actions-workflows/.github/workflows/update-major-release-tag.yml@v1
