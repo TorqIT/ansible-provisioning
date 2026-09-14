@@ -4,10 +4,6 @@
     username: "{{ acr_username }}"
     password: "{{ acr_password }}"
 
-# A fresh named volume is initialized root-owned when there's nothing at the mount path to copy
-# ownership from (agent-server's Dockerfile only chowns /app to the node user, uid 1000, at build
-# time - .copilot-state doesn't exist until this volume is mounted at runtime), which crashes the
-# Copilot runtime with EACCES on startup. Idempotent - safe to re-run on every deploy.
 - name: Ensure agent-server's volumes are writable by its container user (uid 1000)
   community.docker.docker_container:
     name: agent-server-fix-volume-ownership
@@ -26,7 +22,7 @@
     state: started
     image: "{{ acr_registry_url }}/agent-server:latest"
     restart_policy: always
-    # Host networking so agent-server can reach the Mercure container via plain localhost, without needing a shared user-defined Docker network.
+    # Host networking so agent-server can reach the Mercure container via localhost
     network_mode: host
     volumes:
       - agent-server-copilot-state:/app/.copilot-state
