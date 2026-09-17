@@ -3,7 +3,7 @@
     name: gotenberg
     pull: always
     state: started
-    image: gotenberg/gotenberg:8
+    image: gotenberg/gotenberg:8@sha256:f29984bd1e226bf1b93ba90af06000afa8b315853e99d27b9aaa41b93f15c769
     restart_policy: always
     ports:
       - "3000:3000/tcp"

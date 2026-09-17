@@ -3,7 +3,7 @@
     name: mercure
     pull: always
     state: started
-    image: dunglas/mercure:latest
+    image: dunglas/mercure:latest@sha256:33223c37ec29fd705f4de78e6dd38f403664b3669a34bf368b14cb98540016bb
     restart_policy: always
     volumes:
       - mercure-data:/usr/share/opensearch/data

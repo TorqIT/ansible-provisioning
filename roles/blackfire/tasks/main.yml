@@ -3,7 +3,7 @@
     name: blackfire
     pull: always
     state: started
-    image: blackfire/blackfire:2
+    image: blackfire/blackfire:2@sha256:67f1798d39f1903df93a2dcfb53dc6b09867aa907dd1ce0e7d903bd22e0a0a9e
     restart_policy: always
     ports:
       - "8307:8307/tcp"

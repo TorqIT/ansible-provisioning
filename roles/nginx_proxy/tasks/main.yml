@@ -105,7 +105,7 @@
   community.docker.docker_container:
     name: nginx-proxy
     pull: always
-    image: nginxproxy/nginx-proxy:1.7
+    image: nginxproxy/nginx-proxy:1.7@sha256:d8a53e059d5e649cbeb5a70b5231296d4a5e8042d721d4313cf3d20987996844
     restart_policy: "always"
     networks:
       - name: "{{ nginx_network }}"
@@ -119,7 +119,7 @@
   community.docker.docker_container:
     name: nginx-proxy-acme-companion
     pull: always
-    image: nginxproxy/acme-companion:2.5
+    image: nginxproxy/acme-companion:2.5@sha256:308dd273fafec21ce5ea22e830adbf9248a9be18d1caff9f94be321ae9835015
     restart_policy: "always"
     networks:
       - name: "{{ nginx_network }}"

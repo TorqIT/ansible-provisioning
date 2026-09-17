@@ -2,7 +2,7 @@
   community.docker.docker_container:
     name: netdata
     pull: always
-    image: netdata/netdata:latest
+    image: netdata/netdata:latest@sha256:5d61e77afe00470427246ba8ab6a59d2beb3e93d34d769cfcb84f243b5dbd709
     restart_policy: unless-stopped
     ports:
       - "{{ netdata_port }}:19999/tcp"
