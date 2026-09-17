@@ -13,6 +13,10 @@
       "matchManagers": ["custom.regex"],
       "pinDigests": true,
       "groupName": "Services VM Docker images"
+    },
+    {
+      "matchUpdateTypes": ["major"],
+      "enabled": false
     }
   ],
   "customManagers": [
