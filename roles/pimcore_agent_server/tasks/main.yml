@@ -7,7 +7,7 @@
 - name: Ensure agent-server's volumes are writable by its container user (uid 1000)
   community.docker.docker_container:
     name: agent-server-fix-volume-ownership
-    image: alpine
+    image: alpine:3@sha256:28bd5fe8b56d1bd048e5babf5b10710ebe0bae67db86916198a6eec434943f8b
     command: chown -R 1000:1000 /data /uploads
     volumes:
       - agent-server-copilot-state:/data
@@ -36,7 +36,7 @@
       MERCURE_JWT_KEY: "{{ mercure_jwt_key }}"
       ANTHROPIC_API_KEY: "{{ anthropic_api_key }}"
       OPEN_AI_AUTH_TOKEN: "{{ open_ai_auth_token }}"
-      AGENT_SERVER_COPILOT_API_KEY: "{{ anthropic_api_key }}"
+      AGENT_SERVER_COPILOT_API_KEY: "{{ agent_server_copilot_api_key }}"
       AGENT_SERVER_COPILOT_AUTH_MODE: "{{ agent_server_copilot_auth_mode | default(omit) }}"
       AGENT_SERVER_COPILOT_PROVIDER: "{{ agent_server_copilot_provider | default(omit) }}"
       AGENT_SERVER_COPILOT_MODEL: "{{ agent_server_copilot_model | default(omit) }}"
