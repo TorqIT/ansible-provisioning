@@ -1,0 +1,22 @@
+argument_specs:
+  main:
+    short_description: Runs a Blackfire agent container.
+    options:
+      blackfire_client_id:
+        type: str
+        required: true
+        description: Blackfire client ID.
+      blackfire_client_token:
+        type: str
+        required: true
+        no_log: true
+        description: Blackfire client token.
+      blackfire_server_id:
+        type: str
+        required: true
+        description: Blackfire server ID.
+      blackfire_server_token:
+        type: str
+        required: true
+        no_log: true
+        description: Blackfire server token.

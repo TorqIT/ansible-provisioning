@@ -1,0 +1,46 @@
+argument_specs:
+  main:
+    short_description: Runs nginx-proxy (optionally with the acme-companion or certbot) in front of containers advertising a VIRTUAL_HOST env var.
+    options:
+      nginx_network:
+        type: str
+        default: nginx_network
+        description: Docker network nginx-proxy and its backend containers must share.
+      use_acme_companion:
+        type: bool
+        default: true
+        description: >-
+          Automatically obtain/renew certs via Let's Encrypt using the
+          nginx-proxy-acme-companion container and a Docker volume for certs.
+      use_certbot:
+        type: bool
+        default: false
+        description: >-
+          Only consulted when use_acme_companion is false. Mount certs
+          maintained by an existing certbot install (requires
+          letsencrypt_certs_host_directory and domain_name).
+      nginx_certs_volume:
+        type: str
+        default: nginx-certs
+        description: Docker volume used for certs when use_acme_companion is true.
+      letsencrypt_certs_host_directory:
+        type: str
+        required: false
+        description: >-
+          Host path to certbot's live cert directory. Required when
+          use_acme_companion is false and use_certbot is true.
+      domain_name:
+        type: str
+        required: false
+        description: >-
+          Domain the certbot-managed cert covers. Required when
+          use_acme_companion is false and use_certbot is true.
+      nginx_certs_host_directory:
+        type: str
+        required: false
+        description: >-
+          Host directory of manually-managed cert files, bind-mounted
+          read-only to /etc/nginx/certs. Required when both
+          use_acme_companion and use_certbot are false. Wildcard certs use
+          the base domain as the filename (e.g. example.com.crt/.key covers
+          *.example.com); otherwise name files after the exact hostname.

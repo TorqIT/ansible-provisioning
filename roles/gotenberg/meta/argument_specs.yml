@@ -1,0 +1,4 @@
+argument_specs:
+  main:
+    short_description: Runs a Gotenberg container (used for Web2Print) on port 3000. Takes no variables.
+    options: {}

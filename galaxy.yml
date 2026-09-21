@@ -1,0 +1,28 @@
+namespace: torqit
+name: provisioning
+version: 1.0.0
+readme: README.md
+authors:
+  - TorqIT
+description: >-
+  Ansible roles and playbook used to provision TorqIT's Pimcore/Shopware
+  client infrastructure (Docker, Opensearch, Mercure, Gotenberg, Blackfire,
+  Netdata, GitHub Actions runners, nginx-proxy, MySQL/MariaDB).
+license:
+  - MIT
+repository: https://github.com/TorqIT/ansible-provisioning
+issues: https://github.com/TorqIT/ansible-provisioning/issues
+tags:
+  - infrastructure
+  - application
+dependencies:
+  community.general: "*"
+  community.docker: "*"
+  ansible.posix: "*"
+build_ignore:
+  - Dockerfile
+  - .dockerignore
+  - .github
+  - .trivyignore
+  - .ansible-lint
+  - renovate.json

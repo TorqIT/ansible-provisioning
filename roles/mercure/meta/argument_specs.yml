@@ -1,0 +1,9 @@
+argument_specs:
+  main:
+    short_description: Runs a Mercure hub container.
+    options:
+      mercure_jwt_key:
+        type: str
+        required: true
+        no_log: true
+        description: Shared JWT key used for both publisher and subscriber authentication.

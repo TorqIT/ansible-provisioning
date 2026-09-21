@@ -1,0 +1,17 @@
+argument_specs:
+  main:
+    short_description: Runs a Netdata agent container and claims it to Netdata Cloud.
+    options:
+      netdata_claim_token:
+        type: str
+        required: true
+        no_log: true
+        description: Netdata Cloud claim token.
+      netdata_port:
+        type: str
+        default: "19999"
+        description: Host port the Netdata dashboard is published on.
+      netdata_hostname:
+        type: str
+        default: "{{ inventory_hostname }}"
+        description: Hostname Netdata reports itself as in Netdata Cloud.

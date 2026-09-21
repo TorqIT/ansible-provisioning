@@ -1,0 +1,16 @@
+argument_specs:
+  main:
+    short_description: Runs an Opensearch container.
+    options:
+      opensearch_java_opts:
+        type: str
+        default: "-Xms512m -Xmx512m"
+        description: Value of the OPENSEARCH_JAVA_OPTS environment variable.
+      opensearch_auto_create_index:
+        type: str
+        default: "true"
+        description: Value of the action.auto_create_index Opensearch setting.
+      opensearch_indices_query_bool_max_clause_count:
+        type: str
+        default: "3000"
+        description: Value of the indices.query.bool.max_clause_count Opensearch setting.

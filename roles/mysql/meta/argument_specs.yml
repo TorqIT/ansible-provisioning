@@ -1,0 +1,30 @@
+argument_specs:
+  main:
+    short_description: Runs a MySQL container.
+    options:
+      mysql_password:
+        type: str
+        required: true
+        no_log: true
+        description: Password for mysql_user.
+      mysql_root_password:
+        type: str
+        required: false
+        no_log: true
+        description: Defaults to the host/group's sudo_password if not set.
+      mysql_version:
+        type: str
+        default: "8.4"
+        description: Tag of the mysql image to run.
+      innodb_buffer_pool_size:
+        type: str
+        default: "4G"
+        description: Value passed to --innodb-buffer-pool-size.
+      mysql_database_name:
+        type: str
+        default: pimcore
+        description: Database created on first run.
+      mysql_user:
+        type: str
+        default: pimcore
+        description: Non-root user created on first run.

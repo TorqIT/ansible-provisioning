@@ -1,0 +1,66 @@
+argument_specs:
+  main:
+    short_description: Runs the Pimcore Copilot agent-server container, using host networking to reach Mercure via localhost.
+    options:
+      acr_registry_url:
+        type: str
+        required: true
+        description: Container registry to log into and pull agent-server from.
+      acr_username:
+        type: str
+        required: true
+        description: Container registry username.
+      acr_password:
+        type: str
+        required: true
+        no_log: true
+        description: Container registry password.
+      pimcore_internal_url:
+        type: str
+        required: true
+        description: Internal URL of the Pimcore instance agent-server talks to.
+      agent_server_admin_token:
+        type: str
+        required: true
+        no_log: true
+        description: Admin token agent-server authenticates its own requests with.
+      mercure_jwt_key:
+        type: str
+        required: true
+        no_log: true
+        description: Must match the mercure role's mercure_jwt_key.
+      anthropic_api_key:
+        type: str
+        required: true
+        no_log: true
+        description: Anthropic API key for the Copilot backend.
+      open_ai_auth_token:
+        type: str
+        required: true
+        no_log: true
+        description: OpenAI auth token for the Copilot backend.
+      agent_server_copilot_api_key:
+        type: str
+        required: true
+        no_log: true
+        description: API key used for the configured Copilot provider (Anthropic or OpenAI).
+      agent_server_copilot_auth_mode:
+        type: str
+        required: false
+        description: Copilot auth mode override, if the caller sets one.
+      agent_server_copilot_provider:
+        type: str
+        required: false
+        description: Copilot provider override (e.g. anthropic, openai), if the caller sets one.
+      agent_server_copilot_model:
+        type: str
+        required: false
+        description: Copilot model override, if the caller sets one.
+      agent_server_title_model:
+        type: str
+        required: false
+        description: Model used for generating conversation titles, if the caller sets one.
+      agent_server_available_models:
+        type: str
+        required: false
+        description: Restricts which models are selectable, if the caller sets one.

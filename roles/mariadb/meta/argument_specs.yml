@@ -1,0 +1,30 @@
+argument_specs:
+  main:
+    short_description: Runs a MariaDB container.
+    options:
+      mariadb_password:
+        type: str
+        required: true
+        no_log: true
+        description: Password for mariadb_user.
+      mariadb_root_password:
+        type: str
+        required: false
+        no_log: true
+        description: Defaults to the host/group's sudo_password if not set.
+      mariadb_version:
+        type: str
+        default: "11.4"
+        description: Tag of the mariadb image to run.
+      innodb_buffer_pool_size:
+        type: str
+        default: "4G"
+        description: Value passed to --innodb-buffer-pool-size.
+      mariadb_database_name:
+        type: str
+        default: pimcore
+        description: Database created on first run.
+      mariadb_user:
+        type: str
+        default: pimcore
+        description: Non-root user created on first run.

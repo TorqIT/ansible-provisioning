@@ -1,7 +1,7 @@
-collections:
-  - name: community.general
-  - name: community.docker
-  - name: ansible.posix
+# Collection dependencies (community.general, community.docker, ansible.posix)
+# are declared in galaxy.yml and installed automatically when the
+# torqit.provisioning collection itself is installed. These roles aren't
+# collections, so they still need to be installed separately.
 roles:
   - name: geerlingguy.docker
   - name: geerlingguy.pip
