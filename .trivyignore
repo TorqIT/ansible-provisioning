@@ -4,3 +4,9 @@
 # setuptools 84.0.0). Remove once pip ships updated vendor deps.
 GHSA-6v7p-g79w-8964
 CVE-2025-47273
+
+# pip vendor CVEs — pip 26.2.1 (latest, and pip main) bundles urllib3 2.7.0 in
+# pip/_vendor/. Nothing else in the image installs urllib3 (ansible-core doesn't
+# depend on it). Remove once pip ships urllib3 >= 2.8.0.
+CVE-2026-97687
+CVE-2026-97689

@@ -9,6 +9,11 @@
       "pinDigests": true,
       "groupName": "GitHub Actions"
     },
+		{
+      "matchManagers": ["github-actions"],
+      "matchPackagePrefixes": ["TorqIT/"],
+      "pinDigests": false
+    }, 
     {
       "matchManagers": ["custom.regex"],
       "pinDigests": true,
