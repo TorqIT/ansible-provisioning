@@ -87,4 +87,4 @@ jobs:
   tag-major-release:
     needs: [build-tag-push]
     if: startsWith(github.ref, 'refs/tags/')
-    uses: TorqIT/github-actions-workflows/.github/workflows/update-major-release-tag.yml@61dd67099d954f9a0649473bdda8cd0b19225afe # v1
+    uses: TorqIT/github-actions-workflows/.github/workflows/update-major-release-tag.yml@v1
