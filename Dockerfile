@@ -1,5 +1,8 @@
 FROM python:3.14-slim
 
+# Changes daily in CI so the cached apt/pip layers are rebuilt and pick up security updates.
+ARG CACHE_BUST
+
 RUN apt-get update; \
     apt-get upgrade -y; \
     apt-get install -y --no-install-recommends openssh-client sshpass git; \
