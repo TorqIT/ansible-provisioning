@@ -1,4 +1,4 @@
-FROM python:3.14-slim
+FROM python:3.15-slim
 
 # Changes daily in CI so the cached apt/pip layers are rebuilt and pick up security updates.
 ARG CACHE_BUST
