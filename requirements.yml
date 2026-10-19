@@ -6,5 +6,5 @@ roles:
   - name: geerlingguy.docker
   - name: geerlingguy.pip
   - name: monolithprojects.github_actions_runner
-    version: "1.25.1"
+    version: "1.28.1"
     src: https://github.com/MonolithProjects/ansible-github_actions_runner
