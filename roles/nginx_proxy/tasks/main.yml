@@ -105,7 +105,7 @@
   community.docker.docker_container:
     name: nginx-proxy
     pull: always
-    image: nginxproxy/nginx-proxy:1.7@sha256:d8a53e059d5e649cbeb5a70b5231296d4a5e8042d721d4313cf3d20987996844
+    image: nginxproxy/nginx-proxy:1.11@sha256:dd78565eca9742624655bb743723e0aeeab552153c4eea01095e4266c59150d5
     restart_policy: "always"
     networks:
       - name: "{{ nginx_network }}"
