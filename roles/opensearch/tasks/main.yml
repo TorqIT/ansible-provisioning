@@ -11,7 +11,7 @@
     name: opensearch
     pull: always
     state: started
-    image: opensearchproject/opensearch:2@sha256:be67c71b8d0e5edf1e9825145501c0136c3b8221206e1ce782ce17b04d0280b5
+    image: opensearchproject/opensearch:2@sha256:3bfa1ec74d56928c2e018033d45c460ce2c0ea65a5cedd577de3102326c31b89
     restart_policy: always
     env:
       node.name: "opensearch"
